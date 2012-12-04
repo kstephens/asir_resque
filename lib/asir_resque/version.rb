@@ -1,0 +1,3 @@
+module AsirResque
+  VERSION = "0.0.1"
+end

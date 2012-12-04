@@ -1,0 +1,4 @@
+2012-12-04  Kurt A. Stephens  <ks.github@kurtstephens.com>
+
+	* v1.1.2: New version.
+	* Resque: Moved Resque support to gem asir_resque.
