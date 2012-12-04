@@ -1,5 +1,8 @@
 require "asir_resque/version"
 
 module AsirResque
-  # Your code goes here...
 end
+
+gem 'asir'
+require 'asir'
+require 'asir/transport/resque'
