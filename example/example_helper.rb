@@ -13,7 +13,6 @@ require 'asir'
 require 'asir/coder/chain'
 require 'asir/coder/marshal'
 ASIR::Log.enabled = true unless ENV['ASIR_EXAMPLE_SILENT']
-require 'sample_service'
 require 'unsafe_service'
 
 require 'pp'
