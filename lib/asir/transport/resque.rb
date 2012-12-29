@@ -37,23 +37,24 @@ module ASIR
         raise exc.class, "#{self.class} #{uri}: #{exc.message}", exc.backtrace
       end
 
-      def _receive_result message, opaque_result
-        return nil if one_way || message.one_way
+      def _receive_result state
+        return nil if one_way || state.message.one_way
         super
       end
 
-      def _send_result message, result, result_payload, stream, message_state
-        return nil if one_way || message.one_way
+      def _send_result state
+        return nil if one_way || state.message.one_way
         super
       end
 
-      def _send_message message, message_payload
+      def _send_message state
         stream.with_stream! do | io |  # Force connect
+          message = state.message
           queue = message[:resque_queue] || message[:queue] || self.queue
           $stderr.puts "  #{$$} #{self} _send_message #{message_payload.inspect} to queue=#{queue.inspect} as #{self.class} :process_job" if @verbose >= 2
           # Invokes Transport::Resque.perform(metadata, payload)
           metadata = message[:resque_metadata] || message.description
-          ::Resque.enqueue_to(queue, self.class, metadata, message_payload)
+          ::Resque.enqueue_to(queue, self.class, metadata, state.message_payload)
         end
       end
 
@@ -128,9 +129,8 @@ module ASIR
         t.serve_message! payload, nil
       end
 
-      def _receive_message payload, additional_data # is actual payload
-        # $stderr.puts "  #{$$} #{self} _receive_message payload=#{payload.inspect}"
-        [ payload, nil ]
+      def _receive_message state
+        state.message_payload = state.in_stream
       end
 
       ####################################

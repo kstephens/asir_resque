@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency "asir", "~> 1.1.0"
+  gem.add_dependency "asir", "~> 1.2.0"
   gem.add_dependency "redis", "~> 3.0.2"
   gem.add_dependency "resque", "~> 1.23.0"
 
